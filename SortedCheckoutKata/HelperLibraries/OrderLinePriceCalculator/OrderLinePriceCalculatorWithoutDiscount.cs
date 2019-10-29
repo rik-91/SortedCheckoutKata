@@ -2,7 +2,7 @@
 
 namespace SortedCheckoutKata.HelperLibraries.OrderLinePriceCalculator
 {
-    internal class OrderLinePriceCalculator : IOrderLinePriceCalculator
+    internal class OrderLinePriceCalculatorWithoutDiscount : IOrderLinePriceCalculator
     {
         public decimal Calculate(Item item, int itemQty)
         {

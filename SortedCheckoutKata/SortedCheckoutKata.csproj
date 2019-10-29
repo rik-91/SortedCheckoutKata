@@ -45,9 +45,11 @@
     <Compile Include="BusinessObjects\OrderHeader.cs" />
     <Compile Include="BusinessObjects\OrderLine.cs" />
     <Compile Include="CheckoutManager.cs" />
+    <Compile Include="Enums\PriceCalculationType.cs" />
     <Compile Include="HelperLibraries\HelperLibrariesFactory.cs" />
     <Compile Include="HelperLibraries\OrderLinePriceCalculator\IOrderLinePriceCalculator.cs" />
-    <Compile Include="HelperLibraries\OrderLinePriceCalculator\OrderLinePriceCalculator.cs" />
+    <Compile Include="HelperLibraries\OrderLinePriceCalculator\OrderLinePriceCalculatorWithDiscount.cs" />
+    <Compile Include="HelperLibraries\OrderLinePriceCalculator\OrderLinePriceCalculatorWithoutDiscount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
