@@ -1,6 +1,6 @@
 ﻿namespace SortedCheckoutKata.BusinessObjects
 {
-    public class OrderLine
+    internal class OrderLine
     {
         public Item Item { get; set; }
         public int Qty { get; set; }

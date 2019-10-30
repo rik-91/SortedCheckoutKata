@@ -1,28 +1,61 @@
 ﻿using SortedCheckoutKata.BusinessObjects;
+using SortedCheckoutKata.HelperLibraries;
+using SortedCheckoutKata.HelperLibraries.OrderLinePriceCalculator;
+using System.Collections.Generic;
 
 namespace SortedCheckoutKata
 {
-    public static class CheckoutManager
+    public class CheckoutManager
     {
-        public static decimal Total()
+        private OrderHeader _order = null;
+        private IOrderLinePriceCalculator _orderLinePriceCalculator = null;
+
+        public CheckoutManager()
         {
-            return 0;
+            _order = new OrderHeader()
+            {
+                OrderLines = new List<OrderLine>()
+            };
         }
 
-        public static void Scan(Item item)
+        public decimal Total()
         {
-            // 1. Check if item already exists in global OrderHeader objects' OrderLines property.
-            // 1a. If yes increment the Order Lines' qty
-            // 1b. If no add a new Order Line for scanned Item to the OrderHeader and set its' qty to 1.
-
-            // 2. Check if the qty of the item is a multiple of the special offer qty.
-            // 2a. If yes just add the special qty price (0.30 for A99, 0.15 for B15) to the Items' Price.
-            // 2b. If no just add the regular unit price to the Items' Price.
+            return _order.TotalPrice;
         }
 
-        public static decimal TotalOfferInclusive()
+        public void Scan(Item item)
         {
-            return 0;
+
+            if(_order.CheckForItemInOrder(item))
+            {
+                _order.IncrementItemQty(item);
+            }
+            else
+            {
+                _order.AddNewItemToOrder(item);
+            }
+
+            CalculateTotalPrice(item);
+            CalculateDiscountPrice(item);
+        }
+
+        public decimal TotalOfferInclusive()
+        {
+            return _order.DiscountPrice;
+        }
+
+        private void CalculateTotalPrice(Item item)
+        {
+            _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithoutDiscount);
+
+            _order.GetItemsOrderLine(item).TotalPrice = _orderLinePriceCalculator.Calculate(_order.GetItemsOrderLine(item).Item, _order.GetItemsOrderLine(item).Qty);
+        }
+
+        private void CalculateDiscountPrice(Item item)
+        {
+            _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithDiscount);
+
+            _order.GetItemsOrderLine(item).DiscountPrice = _orderLinePriceCalculator.Calculate(_order.GetItemsOrderLine(item).Item, _order.GetItemsOrderLine(item).Qty);
         }
     }
 }
