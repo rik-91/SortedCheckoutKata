@@ -9,6 +9,7 @@ namespace SortedCheckoutKata
     {
         private OrderHeader _order = null;
         private IOrderLinePriceCalculator _orderLinePriceCalculator = null;
+        private int _currentlyScannedItemQty = 0;
 
         public CheckoutManager()
         {
@@ -35,8 +36,12 @@ namespace SortedCheckoutKata
                 _order.AddNewItemToOrder(item);
             }
 
+            _currentlyScannedItemQty = _order.GetItemsOrderLine(item).Qty;
+
             CalculateTotalPrice(item);
             CalculateDiscountPrice(item);
+
+            _currentlyScannedItemQty = 0;
         }
 
         public decimal TotalOfferInclusive()
@@ -48,14 +53,18 @@ namespace SortedCheckoutKata
         {
             _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithoutDiscount);
 
-            _order.GetItemsOrderLine(item).TotalPrice = _orderLinePriceCalculator.Calculate(_order.GetItemsOrderLine(item).Item, _order.GetItemsOrderLine(item).Qty);
+            decimal price = _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
+
+            _order.SetItemTotalPrice(item, price);
         }
 
         private void CalculateDiscountPrice(Item item)
         {
             _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithDiscount);
 
-            _order.GetItemsOrderLine(item).DiscountPrice = _orderLinePriceCalculator.Calculate(_order.GetItemsOrderLine(item).Item, _order.GetItemsOrderLine(item).Qty);
+            decimal price = _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
+
+            _order.SetItemDiscountPrice(item, price);
         }
     }
 }

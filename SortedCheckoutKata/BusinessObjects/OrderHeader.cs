@@ -54,5 +54,15 @@ namespace SortedCheckoutKata.BusinessObjects
                 Qty = 1
             };
         }
+
+        public void SetItemTotalPrice(Item itemToSetPrice, decimal price)
+        {
+            GetItemsOrderLine(itemToSetPrice).TotalPrice = price;
+        }
+
+        public void SetItemDiscountPrice(Item itemToSetPrice, decimal price)
+        {
+            GetItemsOrderLine(itemToSetPrice).DiscountPrice = price;
+        }
     }
 }
