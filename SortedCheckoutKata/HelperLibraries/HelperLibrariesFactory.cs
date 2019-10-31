@@ -15,7 +15,7 @@ namespace SortedCheckoutKata.HelperLibraries
                 case PriceCalculationType.WithDiscount:
                     return new OrderLinePriceCalculatorWithDiscount();
                 default:
-                    throw new Exception("Invalid PriceCalculationType enum provided to SortedCheckoutKata.HelperLibraries.GetOrderLinePriceCalculator method.");
+                    throw new Exception("Invalid PriceCalculationType enum provided to SortedCheckoutKata.HelperLibraries.HelperLibrariesFactory.GetOrderLinePriceCalculator method.");
             }
         }
     }

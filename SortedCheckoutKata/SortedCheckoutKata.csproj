@@ -70,12 +70,13 @@
     <Compile Include="CheckoutManager.cs" />
     <Compile Include="Database\KataItemsDatabaseAccess\IKataItemsDatabaseAccess.cs" />
     <Compile Include="Database\DatabaseFactory.cs" />
-    <Compile Include="Database\KataItemsDatabaseAccess\KataItemsDatabaseAccess.cs" />
+    <Compile Include="Database\KataItemsDatabaseAccess\KataItemsDatabaseAccessMockData.cs" />
     <Compile Include="Database\SQLQueries.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLQueries.resx</DependentUpon>
     </Compile>
+    <Compile Include="Enums\KataItemsDatabaseAccessType.cs" />
     <Compile Include="Enums\PriceCalculationType.cs" />
     <Compile Include="HelperLibraries\HelperLibrariesFactory.cs" />
     <Compile Include="HelperLibraries\OrderLinePriceCalculator\IOrderLinePriceCalculator.cs" />
@@ -105,9 +106,14 @@
       <LastGenOutput>SQLQueries.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Database\SQLQueries\GetSpecialOfferQty.sql" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Database\SQLQueries\GetTotalPrice.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Database\SQLQueries\GetSpecialOfferPrice.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets')" />

@@ -61,6 +61,28 @@ namespace SortedCheckoutKata.Database {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT OfferPrice
+        ///FROM SpecialOffers
+        ///WHERE Sku = @Sku.
+        /// </summary>
+        internal static string GetSpecialOfferPrice {
+            get {
+                return ResourceManager.GetString("GetSpecialOfferPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT OfferQty
+        ///FROM SpecialOffers
+        ///WHERE Sku = @Sku.
+        /// </summary>
+        internal static string GetSpecialOfferQty {
+            get {
+                return ResourceManager.GetString("GetSpecialOfferQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT (UnitPrice * @ItemQty) AS TotalPrice
         ///FROM Items
         ///WHERE Sku = @Sku.
