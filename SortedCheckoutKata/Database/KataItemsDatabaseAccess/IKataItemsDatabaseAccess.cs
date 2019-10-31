@@ -5,5 +5,6 @@
         decimal CalculateTotalPrice(string sku, int itemQty);
         int GetItemSpecialOfferQty(string sku);
         int GetSpecialOfferPrice(string sku);
+        decimal GetUnitPrice(string sku);
     }
 }

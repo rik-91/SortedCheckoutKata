@@ -92,5 +92,16 @@ namespace SortedCheckoutKata.Database {
                 return ResourceManager.GetString("GetTotalPrice", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT UnitPrice
+        ///FROM Items
+        ///WHERE Sku = @Sku.
+        /// </summary>
+        internal static string GetUnitPrice {
+            get {
+                return ResourceManager.GetString("GetUnitPrice", resourceCulture);
+            }
+        }
     }
 }

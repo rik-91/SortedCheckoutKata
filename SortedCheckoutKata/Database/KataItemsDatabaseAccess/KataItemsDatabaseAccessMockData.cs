@@ -34,6 +34,14 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
             return Convert.ToInt32(GetSingleDatabaseValue(SQLQueries.GetTotalPrice, parameters, "OfferPrice"));
         }
 
+        public decimal GetUnitPrice(string sku)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Sku", sku);
+
+            return Convert.ToDecimal(GetSingleDatabaseValue(SQLQueries.GetUnitPrice, parameters, "OfferPrice"));
+        }
+
         private object GetSingleDatabaseValue(string queryText, DynamicParameters parameters, string databaseColumn)
         {
             object readerResults = new object();
