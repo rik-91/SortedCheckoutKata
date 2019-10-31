@@ -27,12 +27,12 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
             return Convert.ToInt32(GetSingleDatabaseValue(SQLQueries.GetSpecialOfferQty, parameters, "OfferQty"));
         }
 
-        public int GetSpecialOfferPrice(string sku)
+        public decimal GetSpecialOfferPrice(string sku)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Sku", sku);
 
-            return Convert.ToInt32(GetSingleDatabaseValue(SQLQueries.GetTotalPrice, parameters, "OfferPrice"));
+            return Convert.ToDecimal(GetSingleDatabaseValue(SQLQueries.GetSpecialOfferPrice, parameters, "OfferPrice"));
         }
 
         public decimal GetUnitPrice(string sku)
