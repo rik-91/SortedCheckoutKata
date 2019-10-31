@@ -20,7 +20,24 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
 
         public decimal CalculateTotalPrice(string sku, int itemQty)
         {
-            return 0;
+            decimal totalPrice = 0;
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Sku", sku);
+            parameters.Add("@ItemQty", itemQty);
+
+            using (IDbConnection connection = new SQLiteConnection(_connectionString))
+            {
+                using (IDataReader reader = connection.ExecuteReader(SQLQueries.GetTotalPrice, new DynamicParameters()))
+                {
+                    while(reader.Read())
+                    {
+                        totalPrice = Convert.ToDecimal(reader["TotalPrice"]);
+                    }
+                }
+            }
+
+            return totalPrice;
         }
 
         public decimal CalculateDiscountPrice(string sku, int itemQty)
