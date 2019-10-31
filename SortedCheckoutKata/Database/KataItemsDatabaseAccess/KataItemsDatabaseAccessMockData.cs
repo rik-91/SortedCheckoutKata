@@ -19,6 +19,14 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
             return Convert.ToDecimal(GetSingleDatabaseValue(SQLQueries.GetTotalPrice, parameters, "TotalPrice"));
         }
 
+        public bool CheckItemEligableForDiscount(string sku)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Sku", sku);
+
+            return Convert.ToBoolean(GetSingleDatabaseValue(SQLQueries.CheckItemEligableForDiscount, parameters, "ItemEligableForDiscount"));
+        }
+
         public int GetItemSpecialOfferQty(string sku)
         {
             DynamicParameters parameters = new DynamicParameters();

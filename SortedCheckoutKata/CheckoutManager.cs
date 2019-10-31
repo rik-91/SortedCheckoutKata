@@ -1,4 +1,6 @@
 ﻿using SortedCheckoutKata.BusinessObjects;
+using SortedCheckoutKata.Database;
+using SortedCheckoutKata.Database.KataItemsDatabaseAccess;
 using SortedCheckoutKata.HelperLibraries;
 using SortedCheckoutKata.HelperLibraries.OrderLinePriceCalculator;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace SortedCheckoutKata
         private OrderHeader _order = null;
         private IOrderLinePriceCalculator _orderLinePriceCalculator = null;
         private int _currentlyScannedItemQty = 0;
+        private IKataItemsDatabaseAccess _kataItemsDatabaseAccess = null;
 
         public CheckoutManager()
         {
@@ -17,6 +20,8 @@ namespace SortedCheckoutKata
             {
                 OrderLines = new List<OrderLine>()
             };
+
+            _kataItemsDatabaseAccess = DatabaseFactory.GetKataItemsDatabaseAccess(Enums.KataItemsDatabaseAccessType.MockData);
         }
 
         public decimal Total()
@@ -37,8 +42,20 @@ namespace SortedCheckoutKata
 
             _currentlyScannedItemQty = _order.GetItemsOrderLine(item).Qty;
 
-            CalculateTotalPrice(item);
-            CalculateDiscountPrice(item);
+            decimal totalPrice = CalculateTotalPrice(item);
+            decimal discountPrice = 0m;
+
+            if (_kataItemsDatabaseAccess.CheckItemEligableForDiscount(item.Sku))
+            {
+                discountPrice = CalculateDiscountPrice(item);
+            }
+            else
+            {
+                discountPrice = CalculateTotalPrice(item);
+            }
+            
+            _order.SetItemTotalPrice(item, totalPrice);
+            _order.SetItemDiscountPrice(item, discountPrice);
 
             _currentlyScannedItemQty = 0;
         }
@@ -48,22 +65,18 @@ namespace SortedCheckoutKata
             return _order.DiscountPrice;
         }
 
-        private void CalculateTotalPrice(Item item)
+        private decimal CalculateTotalPrice(Item item)
         {
             _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithoutDiscount);
 
-            decimal price = _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
-
-            _order.SetItemTotalPrice(item, price);
+            return _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
         }
 
-        private void CalculateDiscountPrice(Item item)
+        private decimal CalculateDiscountPrice(Item item)
         {
             _orderLinePriceCalculator = HelperLibrariesFactory.GetOrderLinePriceCalculator(Enums.PriceCalculationType.WithDiscount);
 
-            decimal price = _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
-
-            _order.SetItemDiscountPrice(item, price);
+            return _orderLinePriceCalculator.Calculate(item, _currentlyScannedItemQty);
         }
     }
 }

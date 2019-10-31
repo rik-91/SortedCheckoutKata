@@ -101,6 +101,7 @@
     <Content Include="Database\SortedCheckoutKata.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Database\SQLQueries\CheckItemEligableForDiscount.sql" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
