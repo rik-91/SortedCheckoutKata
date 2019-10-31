@@ -18,7 +18,7 @@ namespace SortedCheckoutKata.HelperLibraries.OrderLinePriceCalculator
             int tempQty = itemQty;
             int specialOfferQty = _kataItemsDatabaseAccess.GetItemSpecialOfferQty(item.Sku);
 
-            while (itemQty > 0)
+            while (tempQty > 0)
             {
                 if (tempQty >= specialOfferQty)
                 {

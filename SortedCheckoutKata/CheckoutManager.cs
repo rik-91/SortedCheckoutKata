@@ -26,7 +26,6 @@ namespace SortedCheckoutKata
 
         public void Scan(Item item)
         {
-
             if(_order.CheckForItemInOrder(item))
             {
                 _order.IncrementItemQty(item);

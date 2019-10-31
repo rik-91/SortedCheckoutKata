@@ -7,7 +7,8 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
 {
     internal class KataItemsDatabaseAccessMockData : IKataItemsDatabaseAccess
     {
-        private string _connectionString = @"Data Source=.\SortedCheckoutKata.db;Version=3";
+        private static string _databaseFilePath = $@"{AppDomain.CurrentDomain.BaseDirectory}\Database\SortedCheckoutKata.db";
+        private string _connectionString = $@"Data Source={_databaseFilePath};Version=3";
 
         public decimal CalculateTotalPrice(string sku, int itemQty)
         {
@@ -39,7 +40,7 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Sku", sku);
 
-            return Convert.ToDecimal(GetSingleDatabaseValue(SQLQueries.GetUnitPrice, parameters, "OfferPrice"));
+            return Convert.ToDecimal(GetSingleDatabaseValue(SQLQueries.GetUnitPrice, parameters, "UnitPrice"));
         }
 
         private object GetSingleDatabaseValue(string queryText, DynamicParameters parameters, string databaseColumn)
@@ -48,7 +49,7 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
 
             using (IDbConnection connection = new SQLiteConnection(_connectionString))
             {
-                using (IDataReader reader = connection.ExecuteReader(queryText, new DynamicParameters()))
+                using (IDataReader reader = connection.ExecuteReader(queryText, parameters))
                 {
                     while (reader.Read())
                     {

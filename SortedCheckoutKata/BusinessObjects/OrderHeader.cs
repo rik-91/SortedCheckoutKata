@@ -7,6 +7,11 @@ namespace SortedCheckoutKata.BusinessObjects
     {
         public List<OrderLine> OrderLines { get; set; }
 
+        public OrderHeader()
+        {
+            OrderLines = new List<OrderLine>();
+        }
+
         public decimal TotalPrice
         {
             get
@@ -53,6 +58,8 @@ namespace SortedCheckoutKata.BusinessObjects
                 Item = itemToAdd,
                 Qty = 1
             };
+
+            OrderLines.Add(orderLine);
         }
 
         public void SetItemTotalPrice(Item itemToSetPrice, decimal price)
