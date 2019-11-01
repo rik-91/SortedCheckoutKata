@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SortedCheckoutKata.BusinessObjects;
+using System;
 
 namespace SortedCheckoutKata.UnitTests
 {
@@ -147,6 +148,20 @@ namespace SortedCheckoutKata.UnitTests
             // Assert
             decimal price = checkoutManager.TotalOfferInclusive();
             Assert.AreEqual(price, expectedPrice);
+        }
+
+        [TestMethod]
+        public void Scan_NonExistanItem_ThrowException()
+        {
+            // Arrange
+            CheckoutManager checkoutManager = new CheckoutManager();
+            Item nonExistanItem = new Item()
+            {
+                Sku = ""
+            };
+
+            // Assert
+            Assert.ThrowsException<Exception>(() => checkoutManager.Scan(nonExistanItem));
         }
     }
 }

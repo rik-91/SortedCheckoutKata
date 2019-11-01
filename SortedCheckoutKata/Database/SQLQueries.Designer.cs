@@ -72,6 +72,17 @@ namespace SortedCheckoutKata.Database {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT CASE WHEN COUNT(Sku) &gt; 0 THEN 1 ELSE 0 END AS ItemExists
+        ///FROM Items
+        ///WHERE Sku = @Sku.
+        /// </summary>
+        internal static string CheckItemExists {
+            get {
+                return ResourceManager.GetString("CheckItemExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT OfferPrice
         ///FROM SpecialOffers
         ///WHERE Sku = @Sku.

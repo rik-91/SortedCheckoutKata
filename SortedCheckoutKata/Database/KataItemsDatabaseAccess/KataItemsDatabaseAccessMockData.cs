@@ -10,6 +10,14 @@ namespace SortedCheckoutKata.Database.KataItemsDatabaseAccess
         private static string _databaseFilePath = $@"{AppDomain.CurrentDomain.BaseDirectory}\Database\SortedCheckoutKata.db";
         private string _connectionString = $@"Data Source={_databaseFilePath};Version=3";
 
+        public bool CheckItemExists(string sku)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Sku", sku);
+
+            return Convert.ToBoolean(GetSingleDatabaseValue(SQLQueries.CheckItemExists, parameters, "ItemExists"));
+        }
+
         public decimal CalculateTotalPrice(string sku, int itemQty)
         {
             DynamicParameters parameters = new DynamicParameters();

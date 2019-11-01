@@ -3,6 +3,7 @@ using SortedCheckoutKata.Database;
 using SortedCheckoutKata.Database.KataItemsDatabaseAccess;
 using SortedCheckoutKata.HelperLibraries;
 using SortedCheckoutKata.HelperLibraries.OrderLinePriceCalculator;
+using System;
 using System.Collections.Generic;
 
 namespace SortedCheckoutKata
@@ -31,33 +32,38 @@ namespace SortedCheckoutKata
 
         public void Scan(Item item)
         {
-            if(_order.CheckForItemInOrder(item))
+            if (_kataItemsDatabaseAccess.CheckItemExists(item.Sku))
             {
-                _order.IncrementItemQty(item);
+                if (_order.CheckForItemInOrder(item))
+                {
+                    _order.IncrementItemQty(item);
+                }
+                else
+                {
+                    _order.AddNewItemToOrder(item);
+                }
+
+                _currentlyScannedItemQty = _order.GetItemsOrderLine(item).Qty;
+
+                decimal totalPrice = CalculateTotalPrice(item);
+                decimal discountPrice = 0m;
+
+                if (_kataItemsDatabaseAccess.CheckItemEligableForDiscount(item.Sku))
+                {
+                    discountPrice = CalculateDiscountPrice(item);
+                }
+                else
+                {
+                    discountPrice = CalculateTotalPrice(item);
+                }
+
+                _order.SetItemTotalPrice(item, totalPrice);
+                _order.SetItemDiscountPrice(item, discountPrice);
+
+                _currentlyScannedItemQty = 0;
             }
             else
-            {
-                _order.AddNewItemToOrder(item);
-            }
-
-            _currentlyScannedItemQty = _order.GetItemsOrderLine(item).Qty;
-
-            decimal totalPrice = CalculateTotalPrice(item);
-            decimal discountPrice = 0m;
-
-            if (_kataItemsDatabaseAccess.CheckItemEligableForDiscount(item.Sku))
-            {
-                discountPrice = CalculateDiscountPrice(item);
-            }
-            else
-            {
-                discountPrice = CalculateTotalPrice(item);
-            }
-            
-            _order.SetItemTotalPrice(item, totalPrice);
-            _order.SetItemDiscountPrice(item, discountPrice);
-
-            _currentlyScannedItemQty = 0;
+                throw new Exception("Item does not exist.");
         }
 
         public decimal TotalOfferInclusive()
