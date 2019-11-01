@@ -1,15 +1,19 @@
 ﻿using SortedCheckoutKata.Database.KataItemsDatabaseAccess;
 using SortedCheckoutKata.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SortedCheckoutKata.Database
 {
+    /// <summary>
+    /// Provides implementations of the Database interfaces.
+    /// </summary>
     public static class DatabaseFactory
     {
+        /// <summary>
+        /// Returns an implementation of the IKataItemsDatabaseAccess interface.
+        /// </summary>
+        /// <param name="kataItemsDatabaseAccessType">The type of IKataItemsDatabaseAccess to return (MockData)</param>
+        /// <returns>An implementation of the IKataItemsDatabaseAccess interface.</returns>
         internal static IKataItemsDatabaseAccess GetKataItemsDatabaseAccess(KataItemsDatabaseAccessType kataItemsDatabaseAccessType)
         {
             switch (kataItemsDatabaseAccessType)
