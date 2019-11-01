@@ -55,7 +55,7 @@ namespace SortedCheckoutKata.UnitTests
         }
 
         [TestMethod]
-        public void GetTotalPrice_ThreeApplesTwoBiscuits_DiscountPriceMatchExpectedPrice()
+        public void GetDicountPrice_ThreeApplesTwoBiscuits_DiscountPriceMatchExpectedPrice()
         {
             // Arrange
             decimal expectedPrice = 1.75m;
@@ -117,7 +117,7 @@ namespace SortedCheckoutKata.UnitTests
         }
 
         [TestMethod]
-        public void GetTotalPrice_ThreeApplesTwoBiscuitsOneUnkownItem_DiscountPriceMatchExpectedPrice()
+        public void GetDiscountPrice_ThreeApplesTwoBiscuitsOneUnkownItem_DiscountPriceMatchExpectedPrice()
         {
             // Arrange
             decimal expectedPrice = 2.35m;
@@ -162,6 +162,16 @@ namespace SortedCheckoutKata.UnitTests
 
             // Assert
             Assert.ThrowsException<Exception>(() => checkoutManager.Scan(nonExistentItem));
+        }
+
+        [TestMethod]
+        public void Scan_NullItem_ThrowException()
+        {
+            // Arrange
+            CheckoutManager checkoutManager = new CheckoutManager();
+
+            // Assert
+            Assert.ThrowsException<Exception>(() => checkoutManager.Scan(null));
         }
     }
 }

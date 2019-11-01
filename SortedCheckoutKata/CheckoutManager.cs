@@ -45,7 +45,7 @@ namespace SortedCheckoutKata
         /// <param name="item">The item to add to the order.</param>
         public void Scan(Item item)
         {
-            if (_kataItemsDatabaseAccess.CheckItemExists(item.Sku))
+            if (item != null && _kataItemsDatabaseAccess.CheckItemExists(item.Sku))
             {
                 if (_order.CheckForItemInOrder(item))
                 {
