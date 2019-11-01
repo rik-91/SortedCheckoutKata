@@ -161,7 +161,7 @@ namespace SortedCheckoutKata.UnitTests
             };
 
             // Assert
-            Assert.ThrowsException<Exception>(() => checkoutManager.Scan(nonExistanItem));
+            Assert.ThrowsException<Exception>(() => checkoutManager.Scan(nonExistentItem));
         }
     }
 }
