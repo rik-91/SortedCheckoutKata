@@ -151,11 +151,11 @@ namespace SortedCheckoutKata.UnitTests
         }
 
         [TestMethod]
-        public void Scan_NonExistanItem_ThrowException()
+        public void Scan_NonExistentItem_ThrowException()
         {
             // Arrange
             CheckoutManager checkoutManager = new CheckoutManager();
-            Item nonExistanItem = new Item()
+            Item nonExistentItem = new Item()
             {
                 Sku = ""
             };
